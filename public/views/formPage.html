@@ -1,0 +1,214 @@
+<!-- Bootstrap Core CSS -->
+
+<div id="wrapper" >
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0" ng-include="'views/sideBar.html'">
+       </nav>
+        <div id="page-wrapper" style="min-height: 0px;" ng-show="formEdit">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header"> {{appName}} -> <a href="#/main/{{aId}}">{{formDataScope.title}} Screens </a> -> Form</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6">Create Form Elements</div>
+                                <div class="col-md-6 col-lg-6" style="text-align: right;"><a href="#/main/{{aId}}">BACK</a></div>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <form role="form"  name="application" >
+                                    <input type="hidden" ng-disabled="previewMode" ng-model="form.form_name">
+                                    <div class="col-md-12 col-lg-12">
+                                        
+                                            <div class="col-md-3 col-lg-3">
+                                                <div class="form-group ">
+                                                    <label>Field Name</label>
+                                                    <input type="text" class="form-control" ng-disabled="previewMode" ng-model="addField.field_title" >
+                                                    <p class="help-block">Enter field name here.</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="sel1">Select Data Source:</label>
+                                                    <select class="form-control" ng-model="addField.dataSource" >
+                                                        <option value="">Select</option>
+                                                        <option value="Excel" >Excel</option>
+                                                        <option value="Json">Json</option>
+                                                        <option value="User Input">User Input</option>
+                                                    <!--<option value="3">List Template 1</option>
+                                                    <option value="4">List Template 2</option>-->
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-lg-3">
+                                                <div class="form-group " >
+                                                    <label>Fields</label>
+
+                                                    <select ng-model="addField.new" ng-options="type.name as type.value for type in addField.types" class="form-control "></select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-lg-3">
+                                                <div class="form-group">
+                                                    <label for="sel1">Owner  :</label>
+                                                    <select class="form-control" ng-model="addField.owner" >
+                                                        <option value="">Select</option>
+                                                        <option value="Yes" >Yes</option>
+                                                        <option value="No">No</option>
+                                                    <!--<option value="3">List Template 1</option>
+                                                    <option value="4">List Template 2</option>-->
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-lg-3">
+                                                <button type="submit" class="btn btn-default" ng-click="addNewFormField()" style="margin-top: 17%;">Add</button>
+                                            </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12">
+                                        <p ng-show="form.form_fields.length == 0">No fields added yet.</p>
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading">
+                                                List of All Form Fields
+                                            </div>
+                                            <!-- /.panel-heading -->
+                                            <div class="panel-body">
+                                                <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Field Name</th>
+                                                            <th>Data Source</th>
+                                                            <th>Type</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="odd gradeX" ng-repeat="field in formDataScope.nodes.form_data">
+                                                            <td>{{field.field_title}}</td>
+                                                            <td>{{field.dataSource}}</td>
+                                                            <td>{{field.field_type}}</td>
+                                                            <td>
+                                                                <button ng-click="editFromPerticularElement(field,$index)" class='btn btn-warning btn-sm'>EDIT</button>
+                                                                <button ng-click="" class='btn btn-warning btn-sm'>DELETE</button>
+                                                            </td>
+                                                           
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <!-- /.table-responsive -->
+                                               
+                                            </div>
+                                            <!-- /.panel-body -->
+                                        </div>
+                                    </div>
+                                    
+                                </form>
+                                <!-- /.col-lg-6 (nested) -->
+                            </div>
+                            <!-- /.row (nested) -->
+
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </div>
+    <!-- for edit -->
+    <div id="page-wrapper" style="min-height: 0px;" ng-hide="formEdit">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Edit Form Field </h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Edit Form
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12">
+                                <form role="form" ng-submit="updateFormField(formFieldIndex);" name="application" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-12">
+                                            <div class="form-group">
+                                                <label>Field Name</label>
+                                                <input type="text" class="form-control" ng-model="formEditData.field_title">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12">
+                                                <div class="form-group">
+                                                    <label for="sel1">Select Data Source:</label>
+                                                    <select class="form-control" ng-model="formEditData.dataSource" >
+                                                        <option value="">Select</option>
+                                                        <option value="Excel">Excel</option>
+                                                        <option value="Json">Json</option>
+                                                        <option value="User Input">User Input</option>
+                                                    <!--<option value="3">List Template 1</option>
+                                                    <option value="4">List Template 2</option>-->
+                                                    </select>
+                                                </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 col-lg-12">
+                                            <div class="form-group " >
+                                                <label>Fields</label>
+
+                                                <select ng-model="formEditData.field_type" ng-options="type.name as type.value for type in addField.types" class="form-control "></select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12" ng-show="formEditData.field_type==4 || formEditData.field_type=='dropdown'">
+                                            <div class="form-group">
+                                                <label>Add Option</label>
+                                                <input type="text" class="form-control" ng-model="formEditData.optionForSelectBox">
+                                                <button type="button" class="btn btn-default">Add</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12" ng-show="mapsection">
+                                            <div class="form-group">
+                                                <label>Map</label>
+                                                <div>
+                                                    <ng-map zoom="11" center="[40.74, -74.18]">
+  <marker position="[40.74, -74.18]" />
+  <shape name="circle" radius="400" center="[40.74,-74.18]" radius="40" />
+  <control name="overviewMap" opened="true" />
+</ng-map>`
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4" style="margin-top: 4%;">
+                                        <button type="submit" class="btn btn-default">Update</button>
+                                    </div>
+                                   
+                                </form>
+                            </div>
+                            
+                            <!-- /.col-lg-6 (nested) -->
+                        </div>
+                        <!-- /.row (nested) -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+    </div>
+</div>

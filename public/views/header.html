@@ -1,0 +1,10 @@
+<div class="masthead" ng-controller="HeaderCtrl" >
+    <ul class="nav nav-pills pull-right">
+        <li ng-class="{active: ($location.path() == '/') }"><a href="#/">Home</a></li>
+        <li ng-class="{active: ($location.path() == '/forms/create') }"><a href="#/forms/create">Create a Form</a></li>
+        <li ng-class="{active: ($location.path() == '/forms/1/view') }"><a href="#/forms/1/view">View Example Form</a></li>
+        <li ng-class="{active: ($location.path() == '/forms/createView') }"><a href="#/forms/createView">Create View</a></li>
+        <li ng-class="{active: ($location.path() == '/forms/viewForms') }"><a href="#/forms/viewForms">Show All Forms</a></li>
+    </ul>
+    
+</div>

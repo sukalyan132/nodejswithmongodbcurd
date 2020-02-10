@@ -1,0 +1,133 @@
+<!-- Bootstrap Core CSS -->
+
+<div id="wrapper">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0" ng-include="'views/sideBar.html'">
+    </nav>
+    <div id="page-wrapper" style="min-height: 0px;">
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Edit Form Field </h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Edit Form
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12">
+                                <form role="form" ng-submit="updateFormField();" name="application" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-md-6 col-lg-6">
+                                            <div class="form-group">
+                                                <label>Field Name</label>
+                                                <input type="text" class="form-control" ng-model="formEditData.field_title">
+                                                <p class="help-block">Enter Screen name here.</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-6">
+                                                <div class="form-group">
+                                                    <label for="sel1">Select Data Source:</label>
+                                                    <select class="form-control" ng-model="formEditData.dataSource" >
+                                                        <option value="">Select</option>
+                                                        <option value="Excel" >Excel</option>
+                                                        <option value="Json">Json</option>
+                                                        <option value="User Input">User Input</option>
+                                                    <!--<option value="3">List Template 1</option>
+                                                    <option value="4">List Template 2</option>-->
+                                                    </select>
+                                                </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-lg-6">
+                                            <div class="form-group " >
+                                                <label>Fields</label>
+
+                                                <select ng-model="formEditData.field_type" ng-options="type.name as type.value for type in addField.types" class="form-control "></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4" style="margin-top: 4%;">
+                                        <button type="submit" class="btn btn-default">Update</button>
+                                    </div>
+                                   
+                                </form>
+                            </div>
+                            
+                            <!-- /.col-lg-6 (nested) -->
+                        </div>
+                        <!-- /.row (nested) -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <div id="page-wrapper">
+        
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        List of all Screens
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                            <thead>
+                                <tr>
+                                    <th>Screen</th>
+                                    <th>Form</th>
+                                    <th>View</th>
+                                    <th>Action</th>
+                                    <th>Security</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="odd gradeX" ng-repeat="data in appData.screens[0]">
+                                    <td>{{data.title}}</td>
+                                    <td 
+                                    ng-class="{ 'greenClass' : data.nodes.form_data.length>0 }"
+                                     ng-click="goToFormPage(data,$index)">
+                                        <img src="img/form.png" width="30">
+                                    </td>
+                                    <td ng-click="goToViewPage(data,$index)">
+                                        <img src="img/view.png" width="30">
+                                    </td>
+                                    <td>
+                                        <img src="img/action.png" width="30">
+                                    </td>
+                                    <td>
+                                        <img src="img/sequrity.png" width="30">
+                                    </td>
+                                   
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- /.table-responsive -->
+                       
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        
+        <!-- /.row -->
+    </div>
+        <!-- /#page-wrapper -->
+
+</div>

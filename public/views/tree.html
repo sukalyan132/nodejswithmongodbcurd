@@ -1,0 +1,386 @@
+<div id="wrapper">
+      <!-- Navigation -->
+       <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0" ng-include="'views/sideBar.html'">
+       </nav>
+       <div id="page-wrapper">
+      <!--<div ng-include="'views/header.html'"></div> -->
+      <div class="row">
+        
+          <div class="tabs-left">
+            <ul id="superfish-1" class="nav nav-tabs" style="min-height:none;">
+              <li ng-repeat="data in flowData.nodes" ng-class="{ 'active' : $index == 0 }" >
+              <a href="#a{{data.id}}"  title="" data-toggle="tab"><i class="fa fa-2x fa-tasks" aria-hidden="true"></i> {{data.title}} 
+              </a></li>
+              
+            </ul>
+            <div class="tab-content">
+              <div   id="a{{data.id}}"  ng-repeat="data in flowData.nodes"  class="tab-pane" ng-class="{ 'active' : $index == 0 }">
+                 <div>
+                  <!-- Nav tabs -->
+                  <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" style="float:left;" class="active"><a href="#home{{$index}}" aria-controls="home" role="tab" data-toggle="tab">Screen</a></li>
+                    <!--<li role="presentation" style="float:left;"><a href="#profile{{$index}}" aria-controls="profile" role="tab" data-toggle="tab">Action</a></li>-->
+                    <li role="presentation" style="float:left;"><a href="#messages{{$index}}" aria-controls="messages" role="tab" data-toggle="tab">Views</a></li>
+                    <li role="presentation" style="float:left;"><a href="#settings{{$index}}" aria-controls="settings" role="tab" data-toggle="tab">Security</a></li>
+                  </ul>
+
+                  <!-- Tab panes -->
+                  <div class="tab-content" style="padding-top:10%;margin-left:0px">
+                    <div role="tabpanel" class="tab-pane active" id="home{{$index}}" >
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                          <li role="presentation" style="float:left;" class="active"><a href="#screenForm{{$index}}" aria-controls="home" role="tab" data-toggle="tab">Screen Form</a></li>
+                          <li role="presentation" style="float:left;"><a href="#screenAction{{$index}}" aria-controls="settings" role="tab" data-toggle="tab">Screen Action</a></li>
+                        </ul>
+                        <div class="tab-content" style="padding-top:10%;margin-left:0px">
+                            <div role="tabpanel" class="tab-pane active" id="screenForm{{$index}}" >
+                                <form role="form" ng-submit="submitForm();" name="application" enctype="multipart/form-data" ng-init="form.form_fields=data.nodes.form_data">
+                                    <div class="form-group ">
+                                        <label>Screen Name</label>
+                                        <input type="text" class="form-control" ng-disabled="previewMode" ng-model="form.form_name">
+                                        <p class="help-block">Enter form name here.</p>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="sel1">Select Data Source:</label>
+                                      <select class="form-control" ng-model="form.dataSource" >
+                                        <option value="">Select</option>
+                                        <option value="1" >Exel</option>
+                                        <option value="2">Json</option>
+                                        <option value="3">From Screen</option>
+                                        <!--<option value="3">List Template 1</option>
+                                        <option value="4">List Template 2</option>-->
+                                      </select>
+                                    </div>
+                                    <div class="form-group " >
+                                        <label>Fields</label>
+                                        
+                                        <select ng-model="addField.new" ng-options="type.name as type.value for type in addField.types" class="form-control "></select>
+                                        <button type="submit" class="btn" ng-click="addNewFormField(data.nodes,$index)"><i class="icon-plus"></i> Add Field</button>
+                                    </div>
+
+                                    <p ng-show="form.form_fields.length == 0">No fields added yet.</p>
+                                      <div class="col-lg-12" style="padding-right:0px;padding-left: 0px;">
+                                        <div class="panel panel-default">
+                                          <!-- /.panel-heading -->
+                                          <div class="panel-body" ng-hide="previewMode">
+                                              
+
+                                              <div class="panel-group " id="accordion" role="tablist" aria-multiselectable="true">
+                                                <div class="panel panel-info"  ng-hide="previewMode" ng-repeat="field in data.nodes.form_data">
+                                                  <div class="panel-heading" role="tab" id="heading{{$index}}">
+                                                    <h6 class="panel-title" style="font-size: 14px">
+                                                      <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{$index}}" aria-expanded="false" aria-controls="collapse{{$index}}">
+                                                        {{field.field_title}}
+                                                      </a>
+                                                    </h6>
+                                                  </div>
+                                                  <div id="collapse{{$index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{$index}}">
+                                                    <div class="panel-body">
+                                                        <div class="accordion-edit">
+                                                        <button class="btn btn-danger pull-right" type="button" ng-click="deleteField(field.field_id,$index,$parent.$index)"><i class="icon-trash icon-white"></i> Delete</button>
+
+                                                        <div class="row">
+                                                        <div class="span2">Field ID: </div>
+                                                        <div class="span4">{{field.field_id}}</div>
+                                                        </div>
+                                                        <div class="row">
+                                                        <div class="span2">Field Type:</div>
+                                                        <div class="span4">{{field.field_type}}</div>
+                                                        </div>
+
+                                                        <div class="clear"></div> 
+
+                                                        <div class="row">
+                                                        <div class="span2">Field Title:</div>
+                                                        <div class="span4"><input type="text" ng-model="field.field_title" value="{{field.field_title}}"></div>
+                                                        </div>
+                                                        <div class="row">
+                                                        <div class="span2">Field Default Value:</div>
+                                                        <div class="span4"><input type="text" ng-model="field.field_value" value="{{field.field_value}}"></div>
+                                                        </div>
+                                                        <div class="row" ng-show="showAddOptions(field)">
+                                                        <div class="span2">Field Options:</div>
+                                                        <div class="span6">
+                                                        <div ng-repeat="option in field.field_options">
+                                                          <input type="text" ng-model="option.option_title" value="{{option.option_title}}">
+                                                          <a class="btn btn-danger btn-mini right" type="button" ng-click="deleteOption(field, option)"><i class="icon-minus icon-white"></i></a>
+                                                          <span class="label label-inverse">Value: {{ option.option_value }}</span>
+                                                        </div>
+                                                        <button class="btn btn-primary btn-small" type="button" ng-click="addOption(field)"><i class="icon-plus icon-white"></i> Add Option</button>
+                                                        </div>
+                                                        </div>
+
+                                                        <div class="clear"></div> 
+
+                                                        <div class="row">
+                                                        <div class="span2">Show:</div>
+                                                        <div class="span4">
+                                                        <label>
+                                                          <input type="radio" ng-value="true" ng-selected ng-model="field.field_displayType"/>
+                                                          &nbsp; Yes
+                                                        </label>
+                                                        <label>
+                                                          <input type="radio" ng-value="false" ng-model="field.field_displayType"/>
+                                                          &nbsp; No
+                                                        </label>
+                                                        </div>
+                                                        </div>
+
+                                                        <div class="clear"></div> 
+                                                        </div>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                          </div>
+                                          <!-- .panel-body -->
+                                        </div>
+                                      <!-- /.panel -->
+                                      </div>
+                                      <p class="text-center" ng-hide="previewMode">
+                                        <button class="btn btn-success right" type="button" ng-click="saveForms(flowData,$index)"><i class="icon-edit icon-white"></i> Save Form</button>
+                                        <!--<button class="btn btn-primary right" type="button" ng-click="previewOn()"><i class="icon-eye-open icon-white"></i> Preview Form</button>-->
+                                        <!--<button class="btn btn-danger right" type="button" ng-click="reset()"><i class="icon-refresh icon-white"></i> Reset</button>-->
+                                    </p>
+                                </form>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="screenAction{{$index}}" >
+                                <div class="col-sm-10">
+                                  <form role="form">
+                                    <div class="form-group">
+                                      <label for="email">Action Name for Screen:</label>
+                                      <input type="text" ng-model="actionData.actionName"  class="form-control" value="{{data.nodes.action_fields[0].actionName}}" id="email">
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="sel1">Select Screen for Screen:</label>
+                                      <select class="form-control" ng-model="actionData.screens" id="sel1">
+                                        <option value="">Select</option>
+                                        <option ng-repeat="data2 in flowData.nodes" value="{{data2.title}}">{{data2.title}}</option>
+                                      </select>
+                                    </div>
+                                    
+                                    <button type="submit" ng-click="saveAction(flowData,$index)" class="btn btn-default">Save</button>
+                                  </form>
+                                </div>
+                                <div class="class="col-sm-10">
+                                  <table class="table" >
+                                    <thead>
+                                      <tr>
+                                        <th>Action Name</th>
+                                        <th>Screen</th>
+                                        <th>Action</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      <tr ng-repeat="data3 in data.nodes.action_fields_for_form">
+                                        <td>{{data3.actionName}} (Form Action)</td>
+                                        <td>{{data3.screens}}<td>
+
+                                        <button type="button"  ng-click="" class="btn btn-danger">Delete</button>
+                                        </td>
+                                      </tr>
+
+                                    </tbody>
+                                  </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="messages{{$index}}">
+                      <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                          <li role="presentation" style="float:left;" class="active"><a href="#viewForm{{$index}}" aria-controls="home" role="tab" data-toggle="tab">View Form</a></li>
+                          <li role="presentation" style="float:left;"><a href="#viewAction{{$index}}" aria-controls="settings" role="tab" data-toggle="tab">View Action</a></li>
+                        </ul>
+                        <div class="tab-content" style="padding-top:10%;margin-left:0px">
+                            <div role="tabpanel" class="tab-pane active" id="viewForm{{$index}}" >
+                                <div class="col-md-8 ">
+                                  <form >
+                                    <div class="form-group">
+                                      <label for="sel1">Select View Template:</label>
+                                      <select class="form-control" ng-model="fienlData.template" ng-change="changeTempate()">
+                                        <option value="">Select</option>
+                                        <option value="1" >Card Template 1</option>
+                                        <option value="2">Card Template 2</option>
+                                        <!--<option value="3">List Template 1</option>
+                                        <option value="4">List Template 2</option>-->
+                                      </select>
+                                    </div>
+                                    <div class="form-group">
+                                      <label for="sel1">Select Data Source:</label>
+                                      <select class="form-control" ng-model="fienlData.dataSource" >
+                                        <option value="">Select</option>
+                                        <option value="1" >Exel</option>
+                                        <option value="2">Json</option>
+                                        <option value="3">From Screen</option>
+                                        <!--<option value="3">List Template 1</option>
+                                        <option value="4">List Template 2</option>-->
+                                      </select>
+                                    </div>
+                                    <div  ng-show="fienlData.template==1">
+                                        <div style="width: 30%;height: 200px;float: left;border: 1px solid #ccdfff;">
+                                          <select class="form-control" ng-model="fienlData.field1">
+                                                <option value="">Select</option>
+                                                <option ng-repeat="field in data.nodes.form_fields" value="{{field.field_title}}">{{field.field_title}}</option>
+                                                
+                                              </select>
+                                        </div>
+                                        <div style="width: 69%;height: 200px;float: left;border: 1px solid black;">
+                                          <div style="width: 100%;height: 35px; border: 1px solid #ccdfff;">
+                                            <select class="form-control" ng-model="fienlData.field2">
+                                                <option value="">Select</option>
+                                                <option ng-repeat="field in data.nodes.form_data" value="{{field.field_title}}">{{field.field_title}}</option>
+                                                
+                                              </select>
+                                          </div>
+                                          <div style="width: 100%;height: 35px; border: 1px solid #ccdfff;">
+                                            <select class="form-control" ng-model="fienlData.field3">
+                                                <option value="">Select</option>
+                                                <option ng-repeat="field in data.nodes.form_fields" value="{{field.field_title}}">{{field.field_title}}</option>
+                                                
+                                              </select>
+                                          </div>
+                                          <div style="width: 100%;height: 35px; border: 1px solid #ccdfff;">
+                                            <select class="form-control" ng-model="fienlData.field4">
+                                                <option value="">Select</option>
+                                                <option ng-repeat="field in data.nodes.form_fields" value="{{field.field_title}}">{{field.field_title}}</option>
+                                                
+                                              </select>
+                                          </div>
+                                          <div style="width: 100%;height: 35px; border: 1px solid #ccdfff;">
+                                            <select class="form-control" ng-model="fienlData.field5">
+                                                <option value="">Select</option>
+                                                <option ng-repeat="field in data.nodes.form_fields" value="{{field.field_title}}">{{field.field_title}}</option>
+                                                
+                                              </select>
+                                          </div>
+                                          <div style="width: 100%;height: 35px; border: 1px solid #ccdfff;">
+                                            <select class="form-control" ng-model="fienlData.field6">
+                                                <option value="">Select</option>
+                                                <option ng-repeat="field in data.nodes.form_fields" value="{{field.field_title}}">{{field.field_title}}</option>
+                                                
+                                              </select>
+                                          </div>
+                                        </div>
+                                        <div style="width: 95%;height: 95px;float: left;">
+                                          <select class="form-control" ng-model="fienlData.field7">
+                                                <option value="">Select</option>
+                                                <option ng-repeat="field in data.nodes.form_fields" value="{{field.field_title}}">{{field.field_title}}</option>
+                                                
+                                              </select>
+                                        </div>
+                                        <div style="width: 95%;height: 95px;float: left;">
+                                          <select class="form-control" ng-model="fienlData.field8">
+                                                <option value="">Select</option>
+                                                <option ng-repeat="field in data.nodes.form_fields" value="{{field.field_title}}">{{field.field_title}}</option>
+                                                
+                                              </select>
+                                        </div>
+                                    </div>
+                                    <div style="width: 400px;height: 400px;border: 1px solid #ccdfff;" ng-show="fienlData.template==2">
+                                        
+                                        <div style="width: 100%;height: 200px;float: left;border: 1px solid black;">
+                                          <div style="width: 100%;height: 35px; border: 1px solid #ccdfff;" ng-repeat="field3 in data.nodes.form_data">
+                                            <div class="form-group">
+                                              <select class="form-control" ng-model="fienlData.field[$index]">
+                                                <option value="">Select</option>
+                                                <option ng-repeat="field in data.nodes.form_data" value="{{field.field_title}}">{{field.field_title}}</option>
+                                                
+                                              </select>
+                                            </div>
+                                          </div>
+                                          
+                                        </div>
+                                       
+                                    </div>
+                                    <button ng-show="fienlData.template!=0" type="submit" class="btn btn-default" ng-click="submitView(flowData,$index);">Submit</button>
+                                  </form>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="viewAction{{$index}}" >
+                                <div class="col-sm-8">
+                          <form >
+                        
+                            <div class="form-group">
+                              <label for="email">Action Name for View:</label>
+                              <input type="text" ng-model="actionData.actionNameForView"  class="form-control" value="{{data.nodes.action_fields[0].actionName}}" id="email">
+                            </div>
+                            <div class="form-group">
+                              <label for="sel1">Select Screen for View:</label>
+                              <select class="form-control" ng-model="actionData.screensForView" id="sel1">
+                                <option value="">Select</option>
+                                <option ng-repeat="data2 in flowData.nodes" value="{{data2.title}}">{{data2.title}}</option>
+                              </select>
+                            </div>
+                            <button type="submit" ng-click="saveAction(flowData,$index)" class="btn btn-default">Save</button>
+                          </form>
+                        </div>
+                        <div class="col-sm-8">
+                          <table class="table" >
+                            <thead>
+                              <tr>
+                                <th>Action Name</th>
+                                <th>Screen</th>
+                                <th>Action</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr ng-repeat="data4 in data.nodes.action_fields_for_view">
+                                <td>{{data4.actionName}} (View Action)</td>
+                                <td>{{data4.screens}}<td>
+                                  
+                                  <button type="button"  ng-click="" class="btn btn-danger">Delete</button>
+                                </td>
+                              </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                            </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="settings{{$index}}">
+                      ffffffffffffffffffffffffffffffffffffffffffff
+                    </div>
+                  </div>
+
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        
+      </div>
+
+    </div>
+  </div>
+
+    <script>
+    $(function () {
+      $('.tree li:has(ul)').addClass('parent_li').find(' > span').attr('title', 'Collapse this branch');
+      $('.tree li.parent_li > span').on('click', function (e) {
+        var children = $(this).parent('li.parent_li').find(' > ul > li');
+        if (children.is(":visible")) {
+          children.hide('fast');
+          $(this).attr('title', 'Expand this branch').find(' > i').addClass('fa-plus-square-o').removeClass('fa-minus-square-o');
+        } else {
+          children.show('fast');
+          $(this).attr('title', 'Collapse this branch').find(' > i').addClass('fa-minus-square-o').removeClass('fa-plus-square-o');
+        }
+        e.stopPropagation();
+      });
+    });
+    </script>
+    <script>
+      var tabsFn = (function() {
+        function init() {
+          setHeight();
+        }
+        function setHeight() {
+          var $tabPane = $('.tab-pane'),
+          tabsHeight = $('.nav-tabs').height();
+          $tabPane.css({
+           // height: tabsHeight
+          });
+        }
+        $(init);
+      })();
+    </script>

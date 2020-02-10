@@ -1,0 +1,154 @@
+
+<div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0" ng-include="'views/sideBar.html'">
+       </nav>
+        <div id="page-wrapper" style="min-height: 0px;">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Mobile App Dashboard Image</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Add Image
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12">
+                                    <form role="form" ng-submit="submitAppDashboardImageForm();" name="application" enctype="multipart/form-data">
+                                        <div class="row">
+                                            <div class="col-md-3 col-lg-3">
+                                                <div class="form-group">
+                                                    <label>Choose a Image</label>
+                                                    <input type="file" 
+                                                        ngf-select 
+                                                        ng-model="data.file" 
+                                                        name="file">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-lg-3">
+                                                <div class="form-group">
+                                                    <label>Choose Background Img</label>
+                                                    <input type="file" 
+                                                        ngf-select 
+                                                        ng-model="data.file2" 
+                                                        name="file2">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-lg-3">
+                                                <div class="form-group">
+                                                    <label>Description</label>
+                                                    <textarea name="message" ng-model="data.message"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-lg-3">
+                                                <div class="form-group">
+                                                    <label>Banner Size</label>
+                                                    <select class="form-control" ng-model="data.bannerSize" >
+                                                        <option value="">Select</option>
+                                                        <option value="Small" >Small</option>
+                                                        <option value="Medium">Medium</option>
+                                                        <option value="Large">Large</option>
+                                                    
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3 col-lg-3">
+                                                <div class="form-group">
+                                                    <label>App View Setting</label>
+                                                    <select class="form-control" ng-model="data.appSetting" >
+                                                        <option value="">Select</option>
+                                                        <option value="Grid" >Gride View</option>
+                                                        <option value="List">List View</option>
+                                                        
+                                                    
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-lg-4">
+                                                <button type="submit" class="btn btn-default">Add</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                
+                                <!-- /.col-lg-6 (nested) -->
+                            </div>
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <div id="page-wrapper">
+            
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            List of all Images
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>BG</th>
+                                        <th>Text</th>
+                                        <th>Status</th>
+                                        <th>View Type</th>
+                                        <th>Change View</th>
+                                        <th>Action</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="odd gradeX" ng-repeat="data in replyData">
+                                        
+                                        <td><img ng-src="{{domain}}/dashboardImg/{{data.imgUrl}}" width="50" height="50"></td>
+                                        <td><img ng-src="{{domain}}/dashboardImg/bg/{{data.bgimgUrl}}" width="50" height="50"></td>
+                                        <td>{{data.description}}</td>
+                                        <td>{{data.status}}</td>
+                                        <td>{{data.appSetting}}</td>
+                                        <td>
+                                            <button type="button"   ng-click="changeViewType(data)" class="btn btn-primary">Change View</button>
+                                        </td>
+                                        <td>
+
+                                          <button type="button" ng-show="data.status=='deactivate'"  ng-click="activeDeactiveImageStatus(data)" class="btn btn-primary">Active</button>
+                                          <button type="button"  ng-click="activeDeactiveImageStatus(data)" class="btn btn-primary" ng-show="data.status=='activate'">Deactive</button>
+                                          <button type="button"  ng-click="deleteImage(data)" class="btn btn-danger">Delete</button>
+                                        </td>
+                                       
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- /.table-responsive -->
+                           
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+</div>

@@ -1,0 +1,176 @@
+/* Put your CSS here */
+html, body {
+  margin: 20px 0px;
+}
+
+body {
+    background: #fafafa;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #333;
+}
+
+
+/* Custom container */
+.container-narrow {
+  margin: 0 auto;
+  max-width: 700px;
+}
+.container-narrow  hr {
+  margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+  margin: 60px 0;
+  text-align: center;
+}
+.jumbotron h1 {
+  font-size: 72px;
+  line-height: 1;
+}
+.jumbotron .btn {
+  font-size: 21px;
+  padding: 14px 24px;
+}
+
+/* Supporting marketing content */
+.marketing {
+  margin: 60px 0;
+}
+.marketing p, .marketing h4 {
+  margin-top: 28px;
+}
+
+.add-field {
+  text-align: center;
+}
+
+.add-field select {
+  margin-bottom: 0px;
+}
+
+.form-fields .accordion-group{
+  border: 1px solid #AAAAAA;
+}
+
+.form-fields .accordion-heading{
+  background-color: #E2E2E2;
+}
+
+.accordion-edit div, .field div{
+  line-height: 35px;
+}
+
+.form-properties .row {
+  line-height: 35px;
+}
+
+.form-field-label {
+  display: inline;
+}
+
+.required-error {
+  color:red;
+  font-size: smaller;
+}
+
+
+.tree ul{padding-left:20px}
+      .tree a:hover{text-decoration:none;}
+      .tree li {
+          list-style-type:none;
+          margin:0;
+          padding:10px 0 0 0;
+          position:relative
+      }
+      .tree li::before, .tree li::after {
+          content:'';
+          left:-10px;
+          position:absolute;
+          right:auto
+      }
+      .tree li::before {
+          border-left:1px solid #ddd;
+          bottom:50px;
+          height:100%;
+          top:0;
+          width:1px
+      }
+      .tree li::after {
+          border-top:1px solid #ddd;
+          height:20px;
+          top:25px;
+          width:10px
+      }
+      .tree li span {
+          border:1px solid #ddd;
+          background:#eee;
+          display:inline-block;
+          padding:3px 8px;
+          text-decoration:none
+      }
+      .tree li.parent_li>span {
+          cursor:pointer
+      }
+      .tree>ul>li::before, .tree>ul>li::after {
+          border:0
+      }
+      .tree li:last-child::before {
+          height:25px
+      }
+      .tree li.parent_li>span:hover, .tree li.parent_li>span:hover+ul li span {
+          background:#eee;
+          border:1px solid #94a0b4;
+          color:#000;
+      }
+      #superfish-1 .fa{display:block;margin-bottom:5px}
+      #superfish-1{width:60px}    
+      #superfish-1>li{border-bottom: 1px solid #fff;
+          text-align: center;}
+      #superfish-1>li>a {
+        color:#fff;
+          display: block;
+          font-size: 11px;
+          padding: 12px 5px;
+          -webkit-transition: all 0.25s ease;
+          -moz-transition: all 0.25s ease;
+          -o-transition: all 0.25s ease;
+          transition: all 0.25s ease;
+          background: linear-gradient(to right,#1aa2bc 50%,#a2a1a1 50%);
+          background-size: 200% 100%;
+          background-position: right bottom;
+      }
+      #superfish-1>li>a:hover, #superfish-1>li.active>a {
+          background-position: left bottom;
+          text-decoration: none
+      }
+      /**/
+      #superfish-1 .nav-tabs {
+        float: left;
+        border-bottom: 0;
+      }
+      #superfish-1 .nav-tabs li {
+        float: none;
+        margin: 0;
+      }
+      #superfish-1 .nav-tabs li a {
+        margin-right: 0;
+        border: 0;
+        border-radius: 0;
+      }
+      #superfish-1 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+        border: 0;
+      }
+      #superfish-1 .tab-content {
+        margin-left: 60px;
+      }
+      #superfish-1 .tab-content .tab-pane {
+        display: none;
+        background-color: #fff;
+        padding: 15px;
+        overflow-y: auto;
+      }
+      #superfish-1 .tab-content .active {
+        display: block;
+        border: 1px solid #ddd
+      }

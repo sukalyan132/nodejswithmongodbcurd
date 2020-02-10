@@ -1,0 +1,100 @@
+
+<div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0" ng-include="'views/sideBar.html'">
+       </nav>
+        <div id="page-wrapper" style="min-height: 0px;">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Pages</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Create Page
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12">
+                                    <form role="form" ng-submit="createPage();" >
+                                        <div class="row">
+                                            <div class="col-md-3 col-lg-3">
+                                                <div class="form-group">
+                                                    <label>Page Name</label>
+                                                    <input type="text" class="form-control" ng-model="page.pageName">
+                                                    <p class="help-block">Enter page name here.</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-lg-3">
+                                                <button type="submit" class="btn btn-default">Add</button>
+                                            </div>
+                                        </div>
+                                        
+                                    </form>
+                                </div>
+                                
+                                <!-- /.col-lg-6 (nested) -->
+                            </div>
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <div id="page-wrapper">
+            
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            List of all applications
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <table  width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                    <tr>
+                                        <th>Page Name</th>
+                                        <th>Action</th>
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="odd gradeX" ng-repeat="data in allPageData">
+                                        <td>{{data.pageName}}</td>
+                                        <td>
+                                            <button type="button"  ng-click="showAllLayoutOfPage(data)" class="btn btn-danger">Next</button>
+                                            <button type="button"  ng-click="deletePage(data)" class="btn btn-danger">Delete</button>
+                                        </td>
+                                       
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- /.table-responsive -->
+                           
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    
+
+ 
